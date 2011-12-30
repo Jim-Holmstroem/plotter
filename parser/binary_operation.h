@@ -1,22 +1,25 @@
 #ifndef PARSER_BINARY_OPERATION
 #define PARSER_BINARY_OPERATION
 
+#include "iexpression.h"
+
 namespace parser {
-    
+   
     typedef double(*binary_op)(double,double);
-    class binary_operation : iexpression {
+    class binary_operation : public iexpression {
     public:
-        binary_operation(binary_op op,iexpression left,iexpression right)
+        binary_operation(binary_op op,iexpression * left,iexpression * right)
         : _op(op)
         , _left(left)
         , _right(right)
         {
         };
+        virtual double eval(double x) const;
 
     private:
         binary_op _op;
-        iexpression _left;
-        iexpression _right;
+        iexpression * _left;
+        iexpression * _right;
 
     }; 
     
