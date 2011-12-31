@@ -56,6 +56,8 @@ parser::iexpression* parser::parser::parse(std::string expr) {
     _expr = expr;
     _pointer = 0;
 
+    //preprocessing
+    _expr.erase(std::remove_if(_expr.begin(),_expr.end(),std::isspace),_expr.end());
 
 
     return new constant(0);      

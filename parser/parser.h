@@ -69,15 +69,16 @@ namespace parser {
         unary_operator read_unary_operator(int level);
         inline bool is_binary_operator(char token,int level);
         binary_operator read_binary_operator(int level);
-        
-        double read_num();
 
+        
+
+        double read_num();
+         
 
         int _pointer;
         function_container _functions;
         unary_container _unary_ops; //map<level,map<token,operator>>
         binary_container _binary_ops;
-
 
     };
 
