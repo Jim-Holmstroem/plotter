@@ -6,27 +6,28 @@
 #include "variable.h"
 
 parser::parser::parser() {
+    
     _functions = function_container();
-        _functions['cos'] = &math::cos;
-        _functions['sin'] = &math::sin;
-        _functions['tan'] = &math::tan;
-        _functions['acos']= &math::acos;
-        _functions['asin']= &math::asin;
-        _functions['atan']= &math::atan;
+        _functions["cos"] = &cos;
+        _functions["sin"] = &sin;
+        _functions["tan"] = &tan;
+        _functions["acos"]= &acos;
+        _functions["asin"]= &asin;
+        _functions["atan"]= &atan;
         
-        _functions['cosh'] = &math::cosh;
-        _functions['sinh'] = &math::sinh;
-        _functions['tanh'] = &math::tanh;
+        _functions["cosh"] = &cosh;
+        _functions["sinh"] = &sinh;
+        _functions["tanh"] = &tanh;
 
-        _functions['exp'] = &math::exp;
-        _functions['log'] = &math::log;
-        _functions['log10'] = &math::log10;
+        _functions["exp"] = &exp;
+        _functions["log"] = &log;
+        _functions["log10"] = &log10;
 
-        _functions['sqrt'] = &math::sqrt;
+        _functions["sqrt"] = &sqrt;
         
-        _functions['ceil'] = &math::ceil;
-        _functions['abs'] = &math::fabs;
-        _functions['floor'] = &math::floor;
+        _functions["ceil"] = &ceil;
+        _functions["abs"] = &fabs;
+        _functions["floor"] = &floor;
 
     _unary_ops = unary_container();
         _unary_ops[5] = unary_level();
@@ -41,13 +42,13 @@ parser::parser::parser() {
             _binary_ops[1]['+'] = &operators::add;
             _binary_ops[1]['-'] = &operators::sub;
         _binary_ops[2] = binary_level();
-            _binary_ops[2]['%'] = &operators::mod;
+            _binary_ops[2]['%'] = &fmod;
         _binary_ops[3] = binary_level();
             _binary_ops[3]['*'] = &operators::mul;
         _binary_ops[4] = binary_level();
             _binary_ops[4]['/'] = &operators::div;
         _binary_ops[5] = binary_level();
-            _binary_ops[5]['^'] = &math::pow;
+            _binary_ops[5]['^'] = &pow;
 
 };
 

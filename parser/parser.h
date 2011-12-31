@@ -40,17 +40,18 @@ namespace parser {
     *
     */
         class operators {
-            double unit(double x) { return x };
-            double neg(double x) { return -x };
+        public:
+            //all is static since it's need to be converted to typdef function
+            static double unit(double x) { return x; };
+            static double neg(double x) { return -x; };
         
-            double add(double x,double y) { return x+y; };
-            double sub(double x,double y) { return x-y; };
-            double mul(double x,double y) { return x*y; };
-            double div(double x,double y) { return x/y; };
-            double mod(double x,double y) { return x%y; };
+            static double add(double x,double y) { return x+y; };
+            static double sub(double x,double y) { return x-y; };
+            static double mul(double x,double y) { return x*y; };
+            static double div(double x,double y) { return x/y; };
             
-            double gt(double x,double y) { return x>y; };
-            double lt(double x,double y) { return x<y; };
+            static double gt(double x,double y) { return x>y; };
+            static double lt(double x,double y) { return x<y; };
 
         };
 
@@ -73,9 +74,9 @@ namespace parser {
 
 
         int _pointer;
-        _functions;
-        _unary_ops; //map<level,map<token,operator>>
-        _binary_ops;
+        function_container _functions;
+        unary_container _unary_ops; //map<level,map<token,operator>>
+        binary_container _binary_ops;
 
 
     };
