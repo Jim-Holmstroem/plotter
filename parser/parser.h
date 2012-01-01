@@ -89,7 +89,7 @@ namespace parser {
         unary_operator read_unary_operator(int level);
         inline bool is_binary_operator(char token,int level);
         binary_operator read_binary_operator(int level);
-        inline bool is_function(std::string name);
+        inline bool is_function(char c); //start of function or paratheses
         function read_function();
 
         inline static bool is_number(char c);

@@ -82,14 +82,14 @@ bool parser::parser::is_unary_operator(char token,int level) {
     return _unary_ops[level].count(token);
 };
 parser::unary_operator parser::parser::read_unary_operator(int level) {
-   return _unary_ops[level][_at++]; 
+   return _unary_ops[level][*(++_at-1)]; //HACK
 };
 
 bool parser::parser::is_binary_operator(char token,int level) {
     return _binary_ops[level].count(token);
 };
 parser::binary_operator parser::parser::read_binary_operator(int level) {
-    return _binary_ops[level][_at++];
+    return _binary_ops[level][*(++_at-1)]; //HACK
 };
 
 parser::iexpression* parser::parser::read_expression(int level) {
@@ -97,11 +97,11 @@ parser::iexpression* parser::parser::read_expression(int level) {
     return NULL;
 };
 
-bool parser::parser::is_function(std::string name) {
-    return false;
+bool parser::parser::is_function(char c) {
+    return (( (int)c>=97 && (int)c<=122 )&&c!='x')||c=='('; //NOTE no magic numbers
 };
 parser::function parser::parser::read_function() {
-    return ...;
+    return NULL;
 };
 
 parser::iexpression* parser::parser::parse(const std::string expr) {
