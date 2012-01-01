@@ -79,6 +79,18 @@ double parser::parser::read_number() {
     return number;
 };
 
+parser::unary_operator parser::parser::read_unary_operator(int level) {
+   return NULL; 
+};
+
+parser::binary_operator parser::parser::read_binary_operator(int level) {
+    return NULL;
+};
+
+parser::iexpression* parser::parser::read_expression(int level) {
+
+};
+
 parser::iexpression* parser::parser::parse(const std::string expr) {
     _expr = expr;
     _at = _expr.begin();
@@ -86,8 +98,8 @@ parser::iexpression* parser::parser::parse(const std::string expr) {
     //preprocessing HACK,erase is for cleanup
     _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
-    std::cout.precision(15);
-    std::cout << read_number() << std::endl;
 
-    return new constant(read_number());
+
+
+    return NULL;
 };

@@ -7,7 +7,9 @@
 
 int main(int argc,const char* argv[]) {
     parser::parser p = parser::parser();
-    p.parse(argv[1]);
+    std::cout.precision(15);
+	
+	p.parse(argv[1]);
 
 
 };

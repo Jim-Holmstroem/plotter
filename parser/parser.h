@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <exception>
 
 #include <locale>
 
@@ -55,6 +56,23 @@ namespace parser {
             static double gt(double x,double y) { return x>y; };
             static double lt(double x,double y) { return x<y; };
 
+        };
+
+        class parse_exception : public std::exception {
+        public:
+            parse_exception(std::string msg)
+                :_msg(msg) 
+            {
+            };
+            virtual const char* what() const throw()
+            {
+                return ("ParseException: "+_msg).c_str();
+            };
+            virtual ~parse_exception() throw() 
+            {
+            };
+        protected:
+            std::string _msg;
         };
 
     public:

@@ -233,7 +233,7 @@ class Parser:
         if(debug):
             print "in readunary()"
         unop = self.q.get()
-        if(not self.unaryoperators[level].has_key(unop)):
+        if(not self.unaryoperators[level].has_key(unop)): #NOTE not needed always checked in beforehand
             raise ParseException("'"+str(unop)+"' is not a unary operator")
 
         return (self.unaryoperators[level])[unop]
