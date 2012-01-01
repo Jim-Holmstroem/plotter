@@ -72,11 +72,12 @@ namespace parser {
         inline bool is_binary_operator(char token,int level);
         binary_operator read_binary_operator(int level);
 
-        double read_num();
+        double read_number();
         
-        static bool isspace(char c);
+        static bool is_space(char c);
+        static bool is_number(char c);
 
-        int _pointer;
+        std::string::iterator _at; //where the parse-queue is at, (pointer+_expr, works as a queue togheter)
         function_container _functions;
         unary_container _unary_ops; //map<level,map<token,operator>>
         binary_container _binary_ops;

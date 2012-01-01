@@ -36,3 +36,10 @@
 # f = sin(x);cos(x);-sin(x);-cos(x) [works [works]
 # f = (1+1i)**asin(x) 
 
+
+
+#DOCS
+# 
+# 1. how parser::_expr together with parser::_at works a lightweight queue
+# 2. const all over the place
+#

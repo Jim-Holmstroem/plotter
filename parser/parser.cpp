@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <sstream>
 
 #include "constant.h"
 #include "variable.h"
@@ -55,18 +56,37 @@ parser::parser::parser() {
 
 };
 
-bool parser::parser::isspace(char c) {
+bool parser::parser::is_space(char c) {
     return std::isspace(c,std::locale(""));
 };
 
-parser::iexpression* parser::parser::parse(std::string expr) {
+bool parser::parser::is_number(char c) {
+    return ( ((int)c) >=48 && ((int)c) <=57 );
+};
+
+double parser::parser::read_number() {
+    std::string::iterator start = _at;
+    
+    while(is_number(*_at)||(*_at=='.'))
+        ++_at;
+
+    double number;
+    std::stringstream ss;
+    ss.setf(std::ios::fixed,std::ios::floatfield); 
+    ss.str(std::string(start,_at));
+    ss>>std::fixed>>number; //the error will be thrown from here, the count will only be valid if this error is not thrown
+    
+    return number;
+};
+
+parser::iexpression* parser::parser::parse(const std::string expr) {
     _expr = expr;
-    _pointer = 0;
+    _at = _expr.begin();
 
     //preprocessing HACK,erase is for cleanup
     _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
-    std::cout << "[" << _expr << "]" << std::endl;
+    std::cout << read_number() << std::endl;
 
-    return new constant(0); 
+    return new constant(read_number());
 };

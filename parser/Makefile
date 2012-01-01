@@ -19,7 +19,7 @@ $(BIN) : $(OBJ) $(DEP)
 	$(CC) $(CFLAGS) $< -o $@
 
 run:
-	./$(BIN) " tan( 2 * sin(x ) + 1) +1 "
+	./$(BIN) "3.141596"
 
 clean:
 	rm -f $(OBJ) $(BIN)
