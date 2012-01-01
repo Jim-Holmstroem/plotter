@@ -74,7 +74,7 @@ double parser::parser::read_number() {
     std::stringstream ss;
     ss.setf(std::ios::fixed,std::ios::floatfield); 
     ss.str(std::string(start,_at));
-    ss>>std::fixed>>number; //the error will be thrown from here, the count will only be valid if this error is not thrown
+    ss>>number; //the error will be thrown from here, the count will only be valid if this error is not thrown
     
     return number;
 };
@@ -86,6 +86,7 @@ parser::iexpression* parser::parser::parse(const std::string expr) {
     //preprocessing HACK,erase is for cleanup
     _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
+    std::cout.precision(15);
     std::cout << read_number() << std::endl;
 
     return new constant(read_number());
