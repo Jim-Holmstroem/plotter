@@ -23,7 +23,6 @@ namespace parser {
     typedef std::map<int,unary_level> unary_container;
     typedef std::map<int,binary_level> binary_container;
 
-
     class parser {
 
     /* EBNF
@@ -85,15 +84,18 @@ namespace parser {
 
         iexpression* read_expression(int level);
 
+        //NOTE always check is_* before read_*
         inline bool is_unary_operator(char token,int level);
         unary_operator read_unary_operator(int level);
         inline bool is_binary_operator(char token,int level);
         binary_operator read_binary_operator(int level);
+        inline bool is_function(std::string name);
+        function read_function();
 
+        inline static bool is_number(char c);
         double read_number();
         
-        static bool is_space(char c);
-        static bool is_number(char c);
+        inline static bool is_space(char c);
 
         std::string::iterator _at; //where the parse-queue is at, (pointer+_expr, works as a queue togheter)
         function_container _functions;

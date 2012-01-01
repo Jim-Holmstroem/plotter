@@ -63,7 +63,6 @@ bool parser::parser::is_space(char c) {
 bool parser::parser::is_number(char c) {
     return ( ((int)c) >=48 && ((int)c) <=57 );
 };
-
 double parser::parser::read_number() {
     std::string::iterator start = _at;
     
@@ -79,16 +78,30 @@ double parser::parser::read_number() {
     return number;
 };
 
+bool parser::parser::is_unary_operator(char token,int level) {
+    return _unary_ops[level].count(token);
+};
 parser::unary_operator parser::parser::read_unary_operator(int level) {
-   return NULL; 
+   return _unary_ops[level][_at++]; 
 };
 
+bool parser::parser::is_binary_operator(char token,int level) {
+    return _binary_ops[level].count(token);
+};
 parser::binary_operator parser::parser::read_binary_operator(int level) {
-    return NULL;
+    return _binary_ops[level][_at++];
 };
 
 parser::iexpression* parser::parser::read_expression(int level) {
+    
     return NULL;
+};
+
+bool parser::parser::is_function(std::string name) {
+    return false;
+};
+parser::function parser::parser::read_function() {
+    return ...;
 };
 
 parser::iexpression* parser::parser::parse(const std::string expr) {
