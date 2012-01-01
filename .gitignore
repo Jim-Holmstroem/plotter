@@ -1,3 +1,5 @@
 *.swp
 *.o
 *.pyc
+parser_test
+
