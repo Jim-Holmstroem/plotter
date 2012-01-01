@@ -1,9 +1,12 @@
 #include "parser.h"
 
+#include <iostream>
+#include <algorithm>
 #include <cmath>
 
 #include "constant.h"
 #include "variable.h"
+
 
 parser::parser::parser() {
     
@@ -52,13 +55,18 @@ parser::parser::parser() {
 
 };
 
+bool parser::parser::isspace(char c) {
+    return std::isspace(c,std::locale(""));
+};
+
 parser::iexpression* parser::parser::parse(std::string expr) {
     _expr = expr;
     _pointer = 0;
 
-    //preprocessing
-    _expr.erase(std::remove_if(_expr.begin(),_expr.end(),std::isspace),_expr.end());
+    //preprocessing HACK,erase is for cleanup
+    _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
+    std::cout << "[" << _expr << "]" << std::endl;
 
-    return new constant(0);      
+    return new constant(0); 
 };

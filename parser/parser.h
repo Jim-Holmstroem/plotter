@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 
+#include <locale>
+
 #include "iparser.h"
 
 
@@ -58,7 +60,7 @@ namespace parser {
     public:
         virtual iexpression* parse(std::string expr);
         
-        parser(); 
+        parser();
 
     protected:
         std::string _expr;
@@ -70,10 +72,9 @@ namespace parser {
         inline bool is_binary_operator(char token,int level);
         binary_operator read_binary_operator(int level);
 
-        
-
         double read_num();
-         
+        
+        static bool isspace(char c);
 
         int _pointer;
         function_container _functions;
