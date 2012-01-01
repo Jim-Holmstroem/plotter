@@ -88,7 +88,7 @@ parser::binary_operator parser::parser::read_binary_operator(int level) {
 };
 
 parser::iexpression* parser::parser::read_expression(int level) {
-
+    return NULL;
 };
 
 parser::iexpression* parser::parser::parse(const std::string expr) {
