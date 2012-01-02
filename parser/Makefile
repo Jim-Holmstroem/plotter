@@ -2,7 +2,7 @@
 CFLAGS = -c -Wall # -pedantic
 CC = g++
 
-FILE = iparser parser iexpression variable constant binary_operation unary_operation parser_test
+FILE = iexpression variable constant unary_operation binary_operation iparser parser parser_test
 OBJ = $(FILE:=.o)
 SRC = $(FILE:=.cpp)
 HDR = $(FILE:=.h)
