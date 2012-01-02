@@ -5,6 +5,9 @@
 #include <cmath>
 #include <sstream>
 
+#include "unary_operation.h"
+#include "binary_operation.h"
+
 parser::parser::parser() {
     
     _functions = function_container();
@@ -108,7 +111,7 @@ parser::iexpression* parser::parser::read_expression(int level) {
 
             iexpression* inner_expression = read_expression(-1);
             
-            if((++_at)!=')') //')'
+            if(*(++_at)!=')') //')'
             {
                 throw parse_exception("missing )");    
             }
@@ -127,8 +130,8 @@ parser::iexpression* parser::parser::read_expression(int level) {
         iexpression* left=NULL;
         if(is_unary_operator(*_at,level))
         {
-            unary_operator uop = read_unary_operator(); //POTENTIAL BUG: execution order unknown f(a(),b()), always do it one step at the time
-            iexpression* inner_expression = new read_expression(level+1);
+            unary_operator uop = read_unary_operator(level); //POTENTIAL BUG: execution order unknown f(a(),b()), always do it one step at the time
+            iexpression* inner_expression = read_expression(level+1);
             left = new unary_operation(uop,inner_expression); //TODO the word "expression" is large and the problem should be split up into multiple parsing step, not just one big one
 
         //BUG verfiy that -1+1 workd (wich it don't for python)
@@ -140,8 +143,8 @@ parser::iexpression* parser::parser::read_expression(int level) {
         
         if(is_binary_operator(*_at,level+1))
         {
-            binary_operator bop = read_binary_operator();    
-            iexpression* right = new read_expression(level); //BUG? should this really be level?
+            binary_operator bop = read_binary_operator(level+1);    
+            iexpression* right = read_expression(level); //BUG? should this really be level?
             return new binary_operation(bop,left,right);
         }
         else
@@ -176,5 +179,5 @@ parser::iexpression* parser::parser::parse(const std::string expr) {
     //preprocessing HACK,erase is for cleanup
     _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
-    return new read_expression(-1);
+    return read_expression(-1);
 };
