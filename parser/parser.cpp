@@ -98,7 +98,7 @@ parser::variable* parser::parser::read_variable() {
 };
 
 parser::iexpression* parser::parser::read_expression(int level) {
-    if(level==_max_level) //BASE_CASE 
+    if((level-1)==_max_level) //BASE_CASE 
     {
         if(is_variable(*_at)) //NOTE using 'is_variable' to make it generic, 2D-plots next? 
         {
@@ -125,19 +125,17 @@ parser::iexpression* parser::parser::read_expression(int level) {
         {
             return read_constant();    
         }
-        throw parse_exception("unknown syntax");
+        throw parse_exception("unknown syntax, whats left:'"+std::string(_at,_expr.end())+"'");
     }
     else
     { //term_i = [unary_i],term_(i+1),[op_(i+1),term_(i+1)] //NOTE smarter to use _ instead of -
-
         iexpression* left=NULL;
         if(is_unary_operator(*_at,level))
         {
             unary_operator uop = read_unary_operator(level); //POTENTIAL BUG: execution order unknown f(a(),b()), always do it one step at the time
             iexpression* inner_expression = read_expression(level+1);
             left = new unary_operation(uop,inner_expression); //TODO the word "expression" is large and the problem should be split up into multiple parsing step, not just one big one
-
-        //BUG verfiy that -1+1 workd (wich it don't for python)
+        //BUG verfiy that -1+1 works (wich it don't for python)
         }
         else
         {     
