@@ -111,9 +111,12 @@ parser::iexpression* parser::parser::read_expression(int level) {
 
             iexpression* inner_expression = read_expression(-1);
             
-            if(*(++_at)!=')') //')'
+            if(*(_at++)!=')') //')'
             {
-                throw parse_exception("missing )");    
+                throw parse_exception(
+                            std::string("missing ')' left:")+
+                            std::string(_at,_expr.end())
+                        );    
             }
 
             return new unary_operation(f,inner_expression);
