@@ -1,5 +1,5 @@
-#ifndef PARSER_CONSTANT
-#define PARSER_CONSTANT
+#ifndef PARSER_VARIABLE
+#define PARSER_VARIABLE
 
 #include "iexpression.h"
 
