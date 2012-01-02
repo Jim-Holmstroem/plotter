@@ -5,10 +5,6 @@
 #include <cmath>
 #include <sstream>
 
-#include "constant.h"
-#include "variable.h"
-
-
 parser::parser::parser() {
     
     _functions = function_container();
@@ -59,22 +55,21 @@ parser::parser::parser() {
 
 };
 
-bool parser::parser::is_number(char c) {
+bool parser::parser::is_constant(char c) {
     return ( ((int)c) >=48 && ((int)c) <=57 );
 };
-double parser::parser::read_number() {
+parser::constant* parser::parser::read_constant() {
     std::string::iterator start = _at;
     
-    while(is_number(*_at)||(*_at=='.'))
+    while(is_constant(*_at)||(*_at=='.')) //is_constant as in "is_number"
         ++_at;
 
     double number;
     std::stringstream ss;
-    ss.setf(std::ios::fixed,std::ios::floatfield); 
     ss.str(std::string(start,_at));
     ss>>number; //the error will be thrown from here, the count will only be valid if this error is not thrown
     
-    return number;
+    return new constant(number);
 };
 
 bool parser::parser::is_unary_operator(char token,int level) {
@@ -91,21 +86,27 @@ parser::binary_operator parser::parser::read_binary_operator(int level) {
     return _binary_ops[level][*(++_at-1)]; //HACK
 };
 
+bool parser::parser::is_variable(char c) {
+    return c=='x';
+};
+parser::variable* parser::parser::read_variable() {
+    ++_at;
+    return new variable();
+};
+
 parser::iexpression* parser::parser::read_expression(int level) {
-    
     if(level==_max_level) //BASE_CASE 
     {
         if(is_variable(*_at)) //NOTE using 'is_variable' to make it generic, 2D-plots next? 
         {
-            ++_at;
-            return new variable();
+            return read_variable();
         }
         else if(is_function(*_at))
         {
             function f = read_function();
             ++_at; //'('
 
-            iexpression* inner_expression = new read_expression(-1);
+            iexpression* inner_expression = read_expression(-1);
             
             if((++_at)!=')') //')'
             {
@@ -113,11 +114,10 @@ parser::iexpression* parser::parser::read_expression(int level) {
             }
 
             return new unary_operation(f,inner_expression);
-
         }
-        else if(is_number(*_at))
+        else if(is_constant(*_at))
         {
-            return new read_number();    
+            return read_constant();    
         }
         throw parse_exception("unknown syntax");
     }
@@ -135,7 +135,7 @@ parser::iexpression* parser::parser::read_expression(int level) {
         }
         else
         {     
-            left = new read_expression(level+1);
+            left = read_expression(level+1);
         } 
         
         if(is_binary_operator(*_at,level+1))
@@ -149,8 +149,7 @@ parser::iexpression* parser::parser::read_expression(int level) {
             return left;
         }
     }
-
-    return NULL;
+    throw parse_exception("something went wrong in the parsing, shouldn't be here");
 };
 
 bool parser::parser::is_function(char c) {

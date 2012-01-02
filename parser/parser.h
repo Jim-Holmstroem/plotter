@@ -7,7 +7,8 @@
 #include <exception>
 
 #include "iparser.h"
-
+#include "constant.h"
+#include "variable.h"
 
 namespace parser {
 
@@ -90,10 +91,10 @@ namespace parser {
         inline bool is_function(char c); //start of function or paratheses
         function read_function();
 
-        inline static bool is_number(char c);
-        double read_number();
-        inline static bool is_variable(char c); <<easy
-
+        inline static bool is_constant(char c);
+        constant* read_constant();
+        inline static bool is_variable(char c);
+        variable* read_variable();
 
         std::string::iterator _at; //where the parse-queue is at, (pointer+_expr, works as a queue togheter)
         function_container _functions;
