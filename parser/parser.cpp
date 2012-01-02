@@ -12,6 +12,7 @@
 parser::parser::parser() {
     
     _functions = function_container();
+
         _functions["cos"] = &cos;
         _functions["sin"] = &sin;
         _functions["tan"] = &tan;
@@ -54,6 +55,8 @@ parser::parser::parser() {
         _binary_ops[5] = binary_level();
             _binary_ops[5]['^'] = &pow;
 
+    _max_level=5; //NOTE magicnumber, should bu max(key)
+
 };
 
 bool parser::parser::is_space(char c) {
@@ -94,6 +97,63 @@ parser::binary_operator parser::parser::read_binary_operator(int level) {
 
 parser::iexpression* parser::parser::read_expression(int level) {
     
+    if(level==_max_level) //BASE_CASE 
+    {
+        if(is_variable(*_at)) //NOTE using 'is_variable' to make it generic, 2D-plots next? 
+        {
+            ++_at;
+            return new variable();
+        }
+        else if(is_function(*_at))
+        {
+            function f = read_function();
+            ++_at; //'('
+
+            iexpression* inner_expression = new read_expression(-1);
+            
+            if((++_at)!=')') //')'
+            {
+                throw parse_exception("missing )");    
+            }
+
+            return new unary_operation(f,inner_expression);
+
+        }
+        else if(is_number(*_at))
+        {
+            return new read_number();    
+        }
+        throw parse_exception("unknown syntax");
+    }
+    else
+    { //term_i = [unary_i],term_(i+1),[op_(i+1),term_(i+1)] //NOTE smarter to use _ instead of -
+
+        iexpression* left=NULL;
+        if(is_unary_operator(*_at,level))
+        {
+            unary_operator uop = read_unary_operator(); //POTENTIAL BUG: execution order unknown f(a(),b()), always do it one step at the time
+            iexpression* inner_expression = new read_expression(level+1);
+            left = new unary_operation(uop,inner_expression); //TODO the word "expression" is large and the problem should be split up into multiple parsing step, not just one big one
+
+        //BUG verfiy that -1+1 workd (wich it don't for python)
+        }
+        else
+        {     
+            left = new read_expression(level+1);
+        } 
+        
+        if(is_binary_operator(*_at,level+1))
+        {
+            binary_operator bop = read_binary_operator();    
+            iexpression* right = new read_expression(level); //BUG? should this really be level?
+            return new binary_operation(bop,left,right);
+        }
+        else
+        { //nothing todo, just pass it on
+            return left;
+        }
+    }
+
     return NULL;
 };
 
@@ -101,7 +161,17 @@ bool parser::parser::is_function(char c) {
     return (( (int)c>=97 && (int)c<=122 )&&c!='x')||c=='('; //NOTE no magic numbers
 };
 parser::function parser::parser::read_function() {
-    return NULL;
+    std::string::iterator last = std::find(_at,_expr.end(),'(');
+    std::string name = std::string(_at,last);
+    if(name.size()==0)
+        return &operators::unit;
+
+    if(!_functions.count(name))
+        throw parse_exception("'"+name+"' is not a known function.");
+    
+    _at+=(name.size());
+
+    return _functions[name];
 };
 
 parser::iexpression* parser::parser::parse(const std::string expr) {
@@ -111,8 +181,5 @@ parser::iexpression* parser::parser::parse(const std::string expr) {
     //preprocessing HACK,erase is for cleanup
     _expr.erase(std::remove_if(_expr.begin(),_expr.end(),&isspace),_expr.end());
 
-
-
-
-    return NULL;
+    return new read_expression(-1);
 };

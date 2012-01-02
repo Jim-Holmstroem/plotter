@@ -94,14 +94,15 @@ namespace parser {
 
         inline static bool is_number(char c);
         double read_number();
-        
+        inline static bool is_variable(char c); <<easy
+
         inline static bool is_space(char c);
 
         std::string::iterator _at; //where the parse-queue is at, (pointer+_expr, works as a queue togheter)
         function_container _functions;
         unary_container _unary_ops; //map<level,map<token,operator>>
         binary_container _binary_ops;
-
+        int _max_level;
     };
 
 }

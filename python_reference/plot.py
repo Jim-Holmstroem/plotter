@@ -21,6 +21,11 @@ import getopt
 # 1.doesn't modulo imaginary numbers (but stills plot the right value but without modulos)
 # 2. sin(x)^101 is plotted with both real-imaginary and normal part..
 #
+# 3.!!!!! BIG ONE!!! -1+1 isn't -2, checkout the readterm ~@219
+#
+#
+#
+#
 
 
 #SUPPORTS
