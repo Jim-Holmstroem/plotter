@@ -59,10 +59,6 @@ parser::parser::parser() {
 
 };
 
-bool parser::parser::is_space(char c) {
-    return std::isspace(c,std::locale(""));
-};
-
 bool parser::parser::is_number(char c) {
     return ( ((int)c) >=48 && ((int)c) <=57 );
 };

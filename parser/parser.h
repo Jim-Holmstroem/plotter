@@ -6,8 +6,6 @@
 #include <map>
 #include <exception>
 
-#include <locale>
-
 #include "iparser.h"
 
 
@@ -96,7 +94,6 @@ namespace parser {
         double read_number();
         inline static bool is_variable(char c); <<easy
 
-        inline static bool is_space(char c);
 
         std::string::iterator _at; //where the parse-queue is at, (pointer+_expr, works as a queue togheter)
         function_container _functions;
