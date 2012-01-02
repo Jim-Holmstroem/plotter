@@ -19,7 +19,7 @@ $(BIN) : $(OBJ) $(DEP)
 	$(CC) $(CFLAGS) $< -o $@
 
 run:
-	./$(BIN) "1+sin(1+x)+2*x+1"
+	./$(BIN) "1+sin(1+x)+2*x+1" 1
 
 clean:
 	rm -f $(OBJ) $(BIN)

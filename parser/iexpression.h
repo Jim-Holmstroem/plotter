@@ -6,7 +6,6 @@ namespace parser {
     class iexpression {   
     public:
         virtual double eval(double x) const = 0;
-
     };
 
 }
