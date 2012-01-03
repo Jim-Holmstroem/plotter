@@ -60,7 +60,7 @@ namespace parser {
         class parse_exception : public std::exception {
         public:
             parse_exception(std::string msg)
-                :_msg(msg) 
+                : _msg(msg) 
             {
             };
             virtual const char* what() const throw()

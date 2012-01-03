@@ -60,7 +60,7 @@ parser::parser::parser() {
 
 bool
 parser::parser::is_constant(char c) {
-    return ( ((int)c) >=48 && ((int)c) <=57 );
+    return ( static_cast<int>(c) >=48 && static_cast<int>(c) <=57 );
 };
 parser::constant* 
 parser::parser::read_constant() {
@@ -167,7 +167,7 @@ parser::parser::read_expression(int level) {
 
 bool
 parser::parser::is_function(char c) {
-    return (( (int)c>=97 && (int)c<=122 )&&c!='x')||c=='('; //NOTE no magic numbers
+    return (( static_cast<int>(c)>=97 && static_cast<int>(c)<=122 )&&c!='x')||c=='('; //NOTE no magic numbers
 };
 parser::function
 parser::parser::read_function() {
@@ -176,7 +176,7 @@ parser::parser::read_function() {
     if(name.size()==0)
         return &operators::unit;
 
-    if(!_functions.count(name))
+    if(!_functions.count(name)) //TODO write about how google sees exceptions as forbidden, I only use them sparsly
         throw parse_exception("'"+name+"' is not a known function.");
     
     _at+=(name.size());
