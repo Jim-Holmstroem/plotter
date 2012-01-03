@@ -40,6 +40,7 @@ namespace parser {
     * function = sin | cos | tan | ? function specified in list ?
     *
     */
+    protected:
         class operators {
         public:
             //all is static since it's need to be converted to typdef function

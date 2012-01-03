@@ -58,10 +58,12 @@ parser::parser::parser() {
 
 };
 
-bool parser::parser::is_constant(char c) {
+bool
+parser::parser::is_constant(char c) {
     return ( ((int)c) >=48 && ((int)c) <=57 );
 };
-parser::constant* parser::parser::read_constant() {
+parser::constant* 
+parser::parser::read_constant() {
     std::string::iterator start = _at;
     
     while(is_constant(*_at)||(*_at=='.')) //is_constant as in "is_number"
@@ -75,29 +77,36 @@ parser::constant* parser::parser::read_constant() {
     return new constant(number);
 };
 
-bool parser::parser::is_unary_operator(char token,int level) {
+bool 
+parser::parser::is_unary_operator(char token,int level) {
     return _unary_ops[level].count(token);
 };
-parser::unary_operator parser::parser::read_unary_operator(int level) {
+parser::unary_operator 
+parser::parser::read_unary_operator(int level) {
    return _unary_ops[level][*(++_at-1)]; //HACK
 };
 
-bool parser::parser::is_binary_operator(char token,int level) {
+bool
+parser::parser::is_binary_operator(char token,int level) {
     return _binary_ops[level].count(token);
 };
-parser::binary_operator parser::parser::read_binary_operator(int level) {
+parser::binary_operator
+parser::parser::read_binary_operator(int level) {
     return _binary_ops[level][*(++_at-1)]; //HACK
 };
 
-bool parser::parser::is_variable(char c) {
+bool
+parser::parser::is_variable(char c) {
     return c=='x';
 };
-parser::variable* parser::parser::read_variable() {
+parser::variable*
+parser::parser::read_variable() {
     ++_at;
     return new variable();
 };
 
-parser::iexpression* parser::parser::read_expression(int level) {
+parser::iexpression*
+parser::parser::read_expression(int level) {
     if((level-1)==_max_level) //BASE_CASE 
     {
         if(is_variable(*_at)) //NOTE using 'is_variable' to make it generic, 2D-plots next? 
@@ -156,10 +165,12 @@ parser::iexpression* parser::parser::read_expression(int level) {
     throw parse_exception("something went wrong in the parsing, shouldn't be here");
 };
 
-bool parser::parser::is_function(char c) {
+bool
+parser::parser::is_function(char c) {
     return (( (int)c>=97 && (int)c<=122 )&&c!='x')||c=='('; //NOTE no magic numbers
 };
-parser::function parser::parser::read_function() {
+parser::function
+parser::parser::read_function() {
     std::string::iterator last = std::find(_at,_expr.end(),'(');
     std::string name = std::string(_at,last);
     if(name.size()==0)
@@ -173,7 +184,8 @@ parser::function parser::parser::read_function() {
     return _functions[name];
 };
 
-parser::iexpression* parser::parser::parse(const std::string expr) {
+parser::iexpression* 
+parser::parser::parse(const std::string expr) {
     _expr = expr;
     _at = _expr.begin();
 

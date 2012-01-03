@@ -7,8 +7,8 @@
 #include "parser.h"
 #include "iexpression.h"
 
-
-int main(int argc,const char* argv[]) {
+int 
+main(int argc,const char* argv[]) {
     parser::parser p = parser::parser();
     std::cout.precision(15);
 	

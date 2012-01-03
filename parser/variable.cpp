@@ -1,5 +1,6 @@
 #include "variable.h"
-double parser::variable::eval(double x) const{
+double 
+parser::variable::eval(double x) const{
     return x;
 };
 
