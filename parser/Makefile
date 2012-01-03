@@ -37,6 +37,9 @@ run:
 	./$(BIN) "2*x^2-x" 1
 	./$(BIN) "-1+1" 0
 
+memcheck:
+	valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./$(BIN) "sin(x+1)+1" 1
+
 clean:
 	rm -f $(OBJ) $(BIN)
 
