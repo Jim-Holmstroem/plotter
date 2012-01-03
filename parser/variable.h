@@ -11,6 +11,9 @@ namespace parser {
         {
         };
         virtual double eval(double x) const;
+        virtual ~variable()
+        {
+        };
     private:
         
     };

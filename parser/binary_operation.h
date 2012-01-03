@@ -15,6 +15,11 @@ namespace parser {
         {
         };
         virtual double eval(double x) const;
+        virtual ~binary_operation()
+        {
+            delete _left;
+            delete _right;
+        };
 
     private:
         binary_op _op;

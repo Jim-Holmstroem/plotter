@@ -21,4 +21,6 @@ main(int argc,const char* argv[]) {
 
 	std::cout << e->eval(x) << std::endl;
 
+        delete e;
+
 };

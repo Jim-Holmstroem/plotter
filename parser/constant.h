@@ -8,11 +8,13 @@ namespace parser {
     class constant : public iexpression {
     public:
         constant(double c)
-        :_c(c)
+            : _c(c) 
         {
         };
         virtual double eval(double x) const;
-    
+        virtual ~constant() 
+        {
+        };    
     private:
         double _c;
         
