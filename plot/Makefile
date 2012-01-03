@@ -1,22 +1,18 @@
-
-
 CC = g++
 
-CFLAGS = -c `pkg-config --cflags gtk+-2.0` 
-LIBS = `pkg-config --libs gtk+-2.0`
-
-DEBUGGING = `pkg-config --cflags --libs gtk+-2.0`
+CFLAGS = -c `pkg-config --cflags gtk+-3.0` 
+LIBS = `pkg-config --libs gtk+-3.0`
 
 helloworld:
-	rm -f helloworld.o helloworld
 	$(CC) helloworld.cpp -o helloworld.o $(CFLAGS) 
 	$(CC) helloworld.o -o helloworld $(LIBS)
 	./helloworld
 
-helloeasy:
-	rm -f helloworld
-	$(CC) helloworld.cpp -o helloworld $(DEBUGGING)
+helloglade:
+	$(CC) glade_helloworld.cpp -o glade_helloworld.o $(CFLAGS) 
+	$(CC) glade_helloworld.o -o glade_helloworld $(LIBS)
+	./glade_helloworld
 
 clean:
-	rm *.o helloworld
+	rm -f *.o helloworld
 
