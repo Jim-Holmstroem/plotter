@@ -8,7 +8,7 @@ namespace parser {
     typedef double(*unary_op)(double);
     class unary_operation : public iexpression {
     public:
-        unary_operation(unary_op op, iexpression * left)
+        explicit unary_operation(unary_op op, iexpression * left)
         : _op(op)
         , _left(left)
         {  

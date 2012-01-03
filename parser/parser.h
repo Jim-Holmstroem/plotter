@@ -59,7 +59,7 @@ namespace parser {
 
         class parse_exception : public std::exception {
         public:
-            parse_exception(std::string msg)
+            explicit parse_exception(std::string msg)
                 : _msg(msg) 
             {
             };
@@ -77,7 +77,7 @@ namespace parser {
     public:
         virtual iexpression* parse(std::string expr);
         
-        parser();
+        explicit parser();
 
     protected:
         std::string _expr;

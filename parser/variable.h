@@ -7,7 +7,7 @@ namespace parser {
     
     class variable : public iexpression {
     public:
-        variable()
+        explicit variable()
         {
         };
         virtual double eval(double x) const;

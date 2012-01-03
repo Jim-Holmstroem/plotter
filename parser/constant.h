@@ -7,7 +7,7 @@ namespace parser {
 
     class constant : public iexpression {
     public:
-        constant(double c)
+        explicit constant(double c)
             : _c(c) 
         {
         };

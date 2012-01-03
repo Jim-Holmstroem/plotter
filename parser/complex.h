@@ -10,7 +10,7 @@ namespace parser {
         double real;
         double imag;
 
-        complex(double r,double i)
+        explicit complex(double r,double i)
             : real(r)
             , imag(i)
         {
