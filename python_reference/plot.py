@@ -491,4 +491,5 @@ def main(argv):
 
 
 if(__name__=="__main__"):
+    print 'DO NOT USE! it has serious flaws; for example -1+1=-2'
     main(sys.argv[1:])
